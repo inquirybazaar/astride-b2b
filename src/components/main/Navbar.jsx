@@ -57,7 +57,7 @@ const navItems = [
         name: "About",
         icon: Info,
         href: "/about-us",
-        
+
     },
     {
         name: "Our Articles",
@@ -73,11 +73,13 @@ const navItems = [
 
 export default function Navbar() {
     const pathname = usePathname();
-
+    if (pathname.startsWith("/admin")) {
+        return null; // Don't render the navbar on admin pages
+    }
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null);
-     const [enquiryOpen, setEnquiryOpen] = useState(false);
+    const [enquiryOpen, setEnquiryOpen] = useState(false);
 
     // Homepage can be transparent at the top.
     // Every other route starts with a white navbar.
@@ -124,11 +126,10 @@ export default function Navbar() {
                     initial={{ y: -30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5 }}
-                    className={`relative mx-auto flex h-[60px] w-full max-w-[1600px] items-center justify-between rounded-[22px] px-5 transition-all duration-300 md:h-[88px] md:px-10 lg:px-12 ${
-                        useWhiteNavbar
-                            ? "bg-white shadow-lg shadow-black/5 backdrop-blur-xl"
-                            : "bg-black/30 "
-                    }`}
+                    className={`relative mx-auto flex h-[60px] w-full max-w-[1600px] items-center justify-between rounded-[22px] px-5 transition-all duration-300 md:h-[88px] md:px-10 lg:px-12 ${useWhiteNavbar
+                        ? "bg-white shadow-lg shadow-black/5 backdrop-blur-xl"
+                        : "bg-black/30 "
+                        }`}
                 >
                     {/* LEFT LOGO */}
                     <Link
@@ -142,11 +143,10 @@ export default function Navbar() {
                             fill
                             priority
                             sizes="140px"
-                                                        className={`object-contain transition-all duration-300 ${
-                                useWhiteNavbar
-                                    ? "brightness-100 invert-0"
-                                    : "brightness-0 invert"
-                            }`}
+                            className={`object-contain transition-all duration-300 ${useWhiteNavbar
+                                ? "brightness-100 invert-0"
+                                : "brightness-0 invert"
+                                }`}
                         />
                     </Link>
 
@@ -174,11 +174,10 @@ export default function Navbar() {
                                         aria-current={
                                             isActive ? "page" : undefined
                                         }
-                                        className={`relative flex items-center gap-1.5 whitespace-nowrap py-3 text-[14px] font-medium transition-colors duration-300 xl:text-[15px] ${
-                                            useWhiteNavbar
-                                                ? "text-black/75 hover:text-black"
-                                                : "text-white/85 hover:text-white"
-                                        }`}
+                                        className={`relative flex items-center gap-1.5 whitespace-nowrap py-3 text-[14px] font-medium transition-colors duration-300 xl:text-[15px] ${useWhiteNavbar
+                                            ? "text-black/75 hover:text-black"
+                                            : "text-white/85 hover:text-white"
+                                            }`}
                                     >
                                         {item.name}
 
@@ -190,13 +189,11 @@ export default function Navbar() {
                                         )}
 
                                         <span
-                                            className={`absolute bottom-[6px] left-0 h-[1.5px] transition-all duration-300 group-hover:w-full ${
-                                                isActive ? "w-full" : "w-0"
-                                            } ${
-                                                useWhiteNavbar
+                                            className={`absolute bottom-[6px] left-0 h-[1.5px] transition-all duration-300 group-hover:w-full ${isActive ? "w-full" : "w-0"
+                                                } ${useWhiteNavbar
                                                     ? "bg-[#b4e717]"
                                                     : "bg-white"
-                                            }`}
+                                                }`}
                                         />
                                     </Link>
 
@@ -232,11 +229,10 @@ export default function Navbar() {
                     <div className="relative z-10 flex items-center gap-3">
                         <button
                             onClick={() => setEnquiryOpen(true)}
-                            className={`hidden h-[48px] items-center justify-center gap-3 rounded-full px-7 text-[14px] font-semibold transition-all duration-300 hover:-translate-y-0.5 md:flex ${
-                                useWhiteNavbar
-                                    ? "bg-[#b4e717] text-black hover:bg-neutral-100"
-                                    : "bg-white text-black hover:bg-neutral-200"
-                            }`}
+                            className={`hidden h-[48px] items-center justify-center gap-3 rounded-full px-7 text-[14px] font-semibold transition-all duration-300 hover:-translate-y-0.5 md:flex ${useWhiteNavbar
+                                ? "bg-[#b4e717] text-black hover:bg-neutral-100"
+                                : "bg-white text-black hover:bg-neutral-200"
+                                }`}
                         >
                             Contact Us
                             <ArrowUpRight size={18} />
@@ -250,11 +246,10 @@ export default function Navbar() {
                                 menuOpen ? "Close menu" : "Open menu"
                             }
                             aria-expanded={menuOpen}
-                            className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors lg:hidden ${
-                                useWhiteNavbar
-                                    ? "bg-black text-white"
-                                    : "bg-white text-black"
-                            }`}
+                            className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors lg:hidden ${useWhiteNavbar
+                                ? "bg-black text-white"
+                                : "bg-white text-black"
+                                }`}
                         >
                             {menuOpen ? (
                                 <X size={23} />
@@ -265,9 +260,9 @@ export default function Navbar() {
                     </div>
                 </motion.nav>
                 <EnquiryPopup
-                isOpen={enquiryOpen}
-                onClose={() => setEnquiryOpen(false)}
-            />
+                    isOpen={enquiryOpen}
+                    onClose={() => setEnquiryOpen(false)}
+                />
 
             </header>
 
@@ -307,11 +302,10 @@ export default function Navbar() {
                                     return (
                                         <div key={item.name}>
                                             <div
-                                                className={`flex items-center rounded-xl transition-colors ${
-                                                    isActive
-                                                        ? "bg-black text-white"
-                                                        : "text-black hover:bg-neutral-100"
-                                                }`}
+                                                className={`flex items-center rounded-xl transition-colors ${isActive
+                                                    ? "bg-black text-white"
+                                                    : "text-black hover:bg-neutral-100"
+                                                    }`}
                                             >
                                                 <Link
                                                     href={item.href}
@@ -340,11 +334,10 @@ export default function Navbar() {
                                                     >
                                                         <ChevronDown
                                                             size={18}
-                                                            className={`transition-transform duration-300 ${
-                                                                isExpanded
-                                                                    ? "rotate-180"
-                                                                    : ""
-                                                            }`}
+                                                            className={`transition-transform duration-300 ${isExpanded
+                                                                ? "rotate-180"
+                                                                : ""
+                                                                }`}
                                                         />
                                                     </button>
                                                 ) : (

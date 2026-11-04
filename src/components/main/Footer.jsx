@@ -19,6 +19,7 @@ import {
     FiArrowRight,
 } from "react-icons/fi";
 import { categorySlugs } from "../../../data/category-slugs";
+import { usePathname } from "next/navigation";
 
 const categories = [
   {
@@ -80,6 +81,10 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+     const pathname = usePathname();
+        if (pathname.startsWith("/admin")) {
+            return null; // Don't render the navbar on admin pages
+        }
     return (
         <footer className="relative overflow-hidden bg-[#1c4b42] text-white">
             <ChairOutlineSVG />

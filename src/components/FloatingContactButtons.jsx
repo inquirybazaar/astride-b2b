@@ -1,12 +1,16 @@
 "use client";
 
 import { Phone, MessageCircle } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { FaWhatsapp } from "react-icons/fa";
 
 const FloatingContactButtons = () => {
   const phoneNumber = "917311164111"; // Replace with your phone number
   const whatsappNumber = "917311164111"; // Include country code, without +
-
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) {
+    return null; // Don't render the navbar on admin pages
+  }
   return (
     <div className="fixed bottom-6 right-5 z-[9999] flex flex-col items-center gap-3">
       {/* Call Button */}
